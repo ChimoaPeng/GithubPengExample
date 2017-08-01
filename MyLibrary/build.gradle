@@ -1,9 +1,9 @@
 apply plugin: 'com.android.library'
 
 apply plugin: 'com.github.dcendents.android-maven'
-
-group = 'com.example'
-version = '1.0'
+//apply plugin: 'com.jfrog.bintray'
+group = 'com.peng' // Maven Group ID for the artifact，一般填你唯一的包名
+version = '1.2.1'
 
 android {
     compileSdkVersion 26
@@ -36,3 +36,69 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:26.0.0'
     testImplementation 'junit:junit:4.12'
 }
+
+def siteUrl = 'https://github.com/ChimoaPeng/GithubPengExample' // 项目的主页
+def gitUrl = 'https://github.com/ChimoaPeng/GithubPengExample.git' // Git仓库的url
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+                // Add your description here
+                name 'Android Test' //项目描述
+                url siteUrl
+                // Set your license
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'ZhimingPeng'    //填写的一些基本信息
+                        name 'ZhimingPeng'
+                        email 'pzmgail@gmail.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+//Properties properties = new Properties()
+//properties.load(project.rootProject.file('local.properties').newDataInputStream())
+//bintray {
+//    user = 'chimoappeng'/*properties.getProperty("bintray.user")*/
+//    key = '056efd91185dc416816ee2cc23ea7df5d26f3f3f'/*properties.getProperty("bintray.apikey")*/
+//    configurations = ['archives']
+//    pkg {
+//        repo = "maven"
+//        name = "BounceProgressBar"    //发布到JCenter上的项目名字
+//        websiteUrl = siteUrl
+//        vcsUrl = gitUrl
+//        licenses = ["Apache-2.0"]
+//        publish = true
+//    }
+//}
