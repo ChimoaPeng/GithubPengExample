@@ -1,6 +1,5 @@
-# GithubPengExample
-
-https://github.com
+###工程目的
+---
 该工程师为了记录怎么使用github，和如何使用git同步代码而生成的示例工程。
 
 同时该工程产生还实现了如何使用https://jitpack.io/生成项目引用。
