@@ -28,19 +28,20 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.0', {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:3.0.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    implementation 'com.android.support:appcompat-v7:26.0.0'
-    testImplementation 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:26.0.0'
+    testCompile 'junit:junit:4.12'
 }
 
 def siteUrl = 'https://github.com/ChimoaPeng/GithubPengExample' // 项目的主页
 def gitUrl = 'https://github.com/ChimoaPeng/GithubPengExample.git' // Git仓库的url
 install {
     repositories.mavenInstaller {
+        // 1.5版本的插件中只能支持compile依赖选项
         // This generates POM.xml with proper parameters
         pom {
             project {
