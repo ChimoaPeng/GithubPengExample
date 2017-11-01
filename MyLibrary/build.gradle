@@ -2,12 +2,14 @@ apply plugin: 'com.android.library'
 
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven'
+
 group = 'com.peng' // Maven Group ID for the artifact，一般填你唯一的包名
 version = '1.2.1'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion '26.0.2'
 
 
     defaultConfig {
@@ -28,11 +30,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:3.0.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
     compile 'com.android.support:appcompat-v7:26.0.0'
     testCompile 'junit:junit:4.12'
 }
@@ -88,6 +89,7 @@ artifacts {
     archives javadocJar
     archives sourcesJar
 }
+
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 bintray {
@@ -104,3 +106,27 @@ bintray {
         publish = true
     }
 }
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            snapshotRepository(url: MAVEN_SNAPSHOT_URL) {
+                authentication(userName: NEXUS_USERNAME, password: NEXUS_PASSWORD)
+            }
+            repository(url: MAVEN_URL) {
+                authentication(userName: NEXUS_USERNAME, password: NEXUS_PASSWORD)
+            }
+            pom.project {
+                version '1.0.9-SNAPSHOT'
+                artifactId 'MyLibrary'
+                groupId "com.visualing"
+                packaging TYPE
+            }
+        }
+    }
+//    uploadArchives.configuration.artifacts.clear()
+}
+
+
+
+
