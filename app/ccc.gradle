@@ -1,0 +1,10 @@
+rootProject.ext {
+
+// ------------------------------------
+//             版本配置
+// ------------------------------------
+    compileSdkVersion = 25
+    buildToolsVersion = '25.0.2'
+    minSdkVersion = 16
+    targetSdkVersion = 25
+ }
